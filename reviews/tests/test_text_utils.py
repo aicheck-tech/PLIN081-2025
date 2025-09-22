@@ -1,4 +1,7 @@
+import pytest
+
 from reviews.text_utils.anagram import is_anagram
+from reviews.text_utils.plural import pluralize
 from reviews.text_utils.reverse import reverse
 
 
@@ -20,3 +23,25 @@ def test_is_anagram():
     assert is_anagram("", "") is True
     assert is_anagram("a", "a") is True
     assert is_anagram("a", "b") is False
+
+
+@pytest.mark.parametrize("word,expected", [
+    ("Cat", "Cats"),
+    ("bus", "buses"),
+    ("brush", "brushes"),
+    ("church", "churches"),
+    ("box", "boxes"),
+    ("buzz", "buzzes"),
+    ("party", "parties"),
+    ("boy", "boys"),
+    ("day", "days"),
+    ("fly", "flies"),
+    ("ray", "rays"),
+    ("go", "gos"),
+    ("", "s"),
+    ("1233", "1233s"),
+    ("?", "?s"),
+    ("US", "USs"),
+])
+def test_pluralize(word, expected):
+    assert pluralize(word) == expected
